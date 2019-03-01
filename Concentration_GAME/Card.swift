@@ -13,10 +13,10 @@ struct Card {
     var isMatched = false
     var identifier: Int
     
-    static var identifierFuctory = 0
+    static var identifierFactory = 0
     static func getUniqueIdentifier() -> Int {
-        identifierFuctory += 1
-        return identifierFuctory
+        identifierFactory += 1
+        return identifierFactory
     }
     
     init() {

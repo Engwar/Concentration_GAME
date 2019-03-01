@@ -10,11 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
     // пишем lazy чтобы инициализация проходила в момент обращения, если убрать lazy то выдаст ошибку с необходимостью инициализации
+    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
 
     var flipCount = 0 {
         didSet { flipCountLabel.text = "Flips: \(flipCount)"}
+    }
+    var scoreCount = 0 {
+        didSet { scoreGame.text = "Score: \(scoreCount)" }
     }
     @IBOutlet weak var flipCountLabel: UILabel!
     
@@ -23,6 +26,9 @@ class ViewController: UIViewController {
     @IBOutlet var cardButtons: [UIButton]!
     
     @IBAction func newGame(_ sender: UIButton) {
+        flipCount = 0
+        game.newGame()
+        updateViewFromModel()
     }
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount += 1
@@ -46,6 +52,17 @@ class ViewController: UIViewController {
             }
         }
     }
+    //создаем словарь тем для игры
+    var themeGame = [
+        "Halloween": ["🦇", "🎃", "👻", "🙀", "🤖", "😱", "😈", "🍭", "🍬", "🍎"],
+        "Balls": ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱"],
+        "Cars": ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐"],
+        "Picture": ["🎑", "🏞", "🌅", "🌄", "🌠", "🎇", "🌇", "🌃", "🌉", "🌁"],
+        "Fruit": ["🍌", "🍉", "🍇", "🍓", "🍒", "🍑", "🥭", "🥝", "🍍", "🍋"],
+        "Clothes": ["👘", "👙", "👗", "👖", "👔", "🧥", "🥼", "👚", "👕", "🧢"]
+    ]
+    //создаем случайное число для генерации случайной темы
+    //lazy var genTheme = Int(arc4random_uniform(UInt32(themeGame.count)))
     
     var emojiChoices = ["🦇", "🎃", "👻", "🙀", "🤖", "😱", "😈", "🍭", "🍬", "🍎"]
     
